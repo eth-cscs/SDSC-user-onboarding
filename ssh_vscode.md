@@ -60,4 +60,14 @@ Once logged into `ela`, the command `quota` reveals the storage used by the user
 
 ## Visual Studio Code Setup
 
-Install the SSH Remote Extension
+Install the Remote-SSH extension by Microsoft from the marketplace.
+
+![Remote - SSH extension](images/remote-ext.png)
+
+After installation, in the settings, scroll down to the extensions and find the section concerning the one above. There activate the *Remote Server Listen On Socket* setting.
+
+![Listen on Server Setting](images/settings.png)
+
+With these settings, on reload one should be able to find the hosts on the *Remote Explorer* on the left hand side.
+
+![Remote explorer](images/connect-menu.png)
