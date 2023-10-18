@@ -92,4 +92,5 @@ sarus images
 sarus --tty --workdir "$(pwd)" --mount type=bind,source=/scratch,destination=/scratch --mount type=bind,source=${HOME},destination=${HOME} nvcr.io/nvidia/pytorch:23.09-py3 bash
 ```
 
-If needed, you could also set additional environment variables using `--env` or customize the application launched inside the container with `--entrypoint`.
+If needed, you can also set additional environment variables using `--env` or customize the application launched upon container startup with `--entrypoint`.
+
