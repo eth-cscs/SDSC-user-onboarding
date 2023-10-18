@@ -24,9 +24,11 @@ export NCCL_DEBUG=INFO
 export NCCL_NET_GDR_LEVEL=PHB
 export MASTER_ADDR=$(hostname)
 
-echo "SLURM/sbatch: Running sbatch script on ${MASTER_ADDR} - about to launch srun command."
+echo "SLURM/$(basename $0): Running sbatch script on ${MASTER_ADDR} - about to launch srun command."
+
+mkdir -p "$(dirname $0)"/logs
 
 srun -ul sarus run --workdir "$(pwd)" --mount type=bind,source=/scratch,destination=/scratch --mount type=bind,source=${HOME},destination=${HOME} nvcr.io/nvidia/pytorch:23.09-py3 bash -c "
     source ./export_DDP_vars.sh
-    python dist_example.py
+    python -u dist_example.py
     "
