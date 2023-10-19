@@ -81,6 +81,5 @@ Batch scripts have specific attributes and syntax which cover the configuration 
 
 ```bash
 cd sarus/
-mkdir logs # to save the output files
-sbatch submit_dist_example.sh
+sbatch submit_dist_example.sh dist_ex/dist_example.py
 ```
