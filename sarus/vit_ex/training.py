@@ -91,9 +91,9 @@ class TrainEval:
                 if not self.args.dist or dist.get_rank() == 0:
                     torch.save(self.model.state_dict()
                                if not self.args.dist else
-                               self.model.modules.state_dict(),
+                               self.model.module.state_dict(),
                                os.path.join(self.args.training_output, "best-weights.pt"))
-                print("Saved Best Weights")
+                    print("Saved Best Weights")
                 best_valid_loss = val_loss
                 best_train_loss = train_loss
         print(f"Training Loss : {best_train_loss}")
@@ -182,6 +182,8 @@ def main():
 
     TrainEval(config, model, train_loader, train_sampler if args.dist else None, valid_loader, optimizer, criterion, device).train()
 
+    if args.dist:
+        dist.destroy_process_group()
 
 if __name__ == "__main__":
     main()
