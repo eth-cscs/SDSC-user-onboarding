@@ -21,11 +21,10 @@ module load cray-python
 # Environment variable for OpenMP
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
-echo "SLURM/$(basename "${SLURM_JOB_SCRIPT}"): Running sbatch script on ${MASTER_ADDR}"
+echo "SLURM: Running sbatch script on $(hostname)"
 
-# change to directory of this sbatch script
-cd "$(dirname "${SLURM_JOB_SCRIPT}")"
-echo "SLURM/$(basename "${SLURM_JOB_SCRIPT}"): Working in $(pwd) - about to launch srun command."
+# Print working directory of this sbatch script
+echo "SLURM: Working in $(pwd) - about to launch srun command."
 
 set -x
 srun -ul python -u "${args}"
