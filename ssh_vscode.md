@@ -24,10 +24,6 @@ Host daint
     ForwardX11 yes
     ForwardX11Trusted yes
 
-Host daint*
-    User <username>
-    ProxyCommand ssh -q -W "%h:%p" ela.cscs.ch
-
 Host nid0*
     User <username>
     ProxyCommand ssh -q -W "%h:%p" daint
@@ -71,3 +67,15 @@ After installation, in the settings, scroll down to the extensions and find the 
 With these settings, on reload one should be able to find the hosts on the *Remote Explorer* on the left hand side.
 
 ![Remote explorer](images/connect-menu.png)
+
+### Connect VS Code to a Compute Node
+
+Obtain an allocation using `salloc`. That should allocate a compute node with nodeID as `nid0XXXX`.
+
+Now in the VS Code settings, add the nodeID along with a path where one'd like VS Code to start from in the *Server Install Path* panel in the Remote-SSH extension section.
+
+![Add nodeID and path](images/add-node.png)
+
+Check in the terminal if `ssh nid0XXXX` works. If yes, then proceed to connect in VS Code using:
+
+`Connect to Host -> nid0XXXX`.
