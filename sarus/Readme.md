@@ -70,7 +70,7 @@ to find the corresponding compatible CUDA versions according to this [compatibil
 
 and using the corresponding release notes for your container of choice, e.g. for PyTorch https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/index.html
 
-Note that due to the [forward compatibility](https://docs.nvidia.com/deploy/cuda-compatibility/index.html#deployment-consideration-forward) feature, the current CUDA kernel driver can support up to the newest PyTorch release.
+Note that due to the [forward compatibility](https://docs.nvidia.com/deploy/cuda-compatibility/index.html#deployment-consideration-forward) feature, the current CUDA kernel driver can support up to the newest PyTorch release (this needs to be checked for each container on a case by case basis).
 
 6. For Deep Learning with PyTorch, pull a compatible PyTorch image from NVIDIA GPU Cloud (NGC)
 
