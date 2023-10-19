@@ -13,7 +13,7 @@ These series of commands work on `daint`.
 This command is used to request an compute resources interactively.
 
 ```bash
-salloc -N 1 -C gpu -t 30
+salloc -N 1 -C gpu -A <project-account> -t 30
 ```
 
 The command above requests for `1` node from the `gpu` partition for `30` mins. One may also request a multicore partition by specifying `mc` if a GPU is not required.
