@@ -7,7 +7,7 @@
 #SBATCH --cpus-per-task=12
 #SBATCH --constraint=gpu
 #SBATCH --partition=debug
-#SBATCH --account=csstaff
+#SBATCH --account=sd00
 
 #SBATCH --output=logs/slurm-%x.%j.out
 #SBATCH --error=logs/slurm-%x.%j.err

@@ -3,7 +3,7 @@
 1. On Piz Daint's login node, allocate a compute node
 
 ```
-lukasd@daintYYY:~> salloc -A csstaff -C gpu --nodes=1 --time=30:00
+lukasd@daintYYY:~> salloc -A sd00 -C gpu --nodes=1 --time=30:00
 ```
 
 2. Get shell access on the compute node - either directly from the login node
@@ -133,7 +133,7 @@ sbatch --time 5:00 submit_sarus_single.sh vit_ex/inference.py --training-output 
 11. If an interative session is desired or runtime inspection with a debugger necessary, allocate a node with `salloc`, e.g.
 
 ```
-salloc --job-name=sdsc-interactive --time=00:15:00 --nodes=1 --ntasks-per-node=1 --cpus-per-task=12 --constraint=gpu --partition=debug --account=csstaff
+salloc --job-name=sdsc-interactive --time=00:15:00 --nodes=1 --ntasks-per-node=1 --cpus-per-task=12 --constraint=gpu --partition=debug --account=sd00
 ```
 and get an interactive shell in the container with
 ```

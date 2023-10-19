@@ -3,7 +3,7 @@
 1. On Piz Daint's login node, allocate a compute node
 
 ```
-lukasd@daintYYY:~> salloc -A csstaff -C gpu --nodes=1 --time=30:00
+lukasd@daintYYY:~> salloc -A sd00 -C gpu --nodes=1 --time=30:00
 ```
 
 2. Get shell access on the compute node - either directly from the login node
