@@ -92,12 +92,12 @@ sarus images
 sarus --tty --workdir "$(pwd)" --mount type=bind,source=/scratch,destination=/scratch --mount type=bind,source=${HOME},destination=${HOME} nvcr.io/nvidia/pytorch:23.09-py3 bash
 ```
 
-If needed, you can also set additional environment variables using `--env` or customize the application launched upon container startup with `--entrypoint`. If you only require certain commands to be run between container startup and execution of your application, take a look at `sarus_entrypoint.sh`.
+as in `sarus_interactive.sh`. If needed, you can also set additional environment variables using `--env` or customize the application launched upon container startup with `--entrypoint`. If you only require certain commands to be run between container startup and execution of your application, take a look at `sarus_entrypoint.sh`.
 
-9. Running a distributed example script with PyTorch DDP can be achieved with
+9. Running a distributed example script with PyTorch DDP through sbatch can be achieved with
 
 ```
-sbatch submit_sarus_dist.sh dist_ex/dist_example.py
+sbatch submit_sarus_ddp.sh dist_ex/dist_example.py
 ```
 
 10. A more complete example is available in `vit_ex`. The data can be downloaded with
@@ -117,7 +117,7 @@ cp vit_ex/config.yaml data/vit/training/${run_label}
 Then we can submit a distributed training SLURM job with Sarus. Note the usage of `sbatch` parameters to override the script's `$SBATCH` entries.
 
 ```
-sbatch --nodes 2 --time 10:00 submit_sarus_dist.sh vit_ex/training.py --training-input data/raw/cifar10 --test-input data/raw/cifar10 --config data/vit/training/${run_label}/config.yaml --training-output data/vit/training/${run_label}/ --dist --dry-run
+sbatch --nodes 2 --time 10:00 submit_sarus_ddp.sh vit_ex/training.py --training-input data/raw/cifar10 --test-input data/raw/cifar10 --config data/vit/training/${run_label}/config.yaml --training-output data/vit/training/${run_label}/ --dist --dry-run
 ```
 
 To run inference, we first create the output directory as well.

@@ -1,6 +1,6 @@
 #!/bin/bash -l
 
-#SBATCH --job-name=sdsc-dist
+#SBATCH --job-name=sdsc-ddp
 #SBATCH --time=00:05:00
 #SBATCH --nodes=4
 #SBATCH --ntasks-per-node=1
@@ -15,7 +15,8 @@
 args="${@}"
 
 module load daint-gpu
-module load sarus
+# load any further dependencies, such as
+module load PyTorch
 
 # Environment variable for OpenMP
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
@@ -32,7 +33,7 @@ cd "$(dirname "${SLURM_JOB_SCRIPT}")"
 echo "SLURM/$(basename "${SLURM_JOB_SCRIPT}"): Working in $(pwd) - about to launch srun command."
 
 set -x
-srun -ul sarus run --workdir "$(pwd)" --mount type=bind,source=/scratch,destination=/scratch --mount type=bind,source=${HOME},destination=${HOME} nvcr.io/nvidia/pytorch:23.09-py3 bash -c "
+srun -ul bash -c "
     source ./export_DDP_vars.sh
     python -u ${args}
     "
