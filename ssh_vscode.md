@@ -56,7 +56,7 @@ Last login: Thu Jun 22 17:40:02 2023 from 31-10-158-193.cgn.dynamic.upc.ch
 
 We should also be able to do the same with `daint`.
 
-Once logged into `ela`, the command `quota` reveals the storage used by the user. The command `accounting` shows the usage of the allocated node hours.
+Once logged into `ela`, the command `quota` reveals the storage used by the user. From `daint`, the command `accounting` shows the usage of the allocated node hours.
 
 ## Visual Studio Code Setup
 
