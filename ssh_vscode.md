@@ -2,7 +2,7 @@
 
 ## SSH Configuration
 
-For passwordless access to the CSCS machines, we configure SSH in our local machines with the keys MFA tools. We need to add some more configuration information in our `~/.ssh/config` file.
+For passwordless access to the CSCS machines, we configure SSH in our local machines with the keys configured using the [MFA](https://user.cscs.ch/access/auth/mfa/) tools. We need to add some more configuration information in our `~/.ssh/config` file.
 
 We configure for Ela which is CSCS's front-end machine which connects remote users to clusters within the CSCS network.
 
