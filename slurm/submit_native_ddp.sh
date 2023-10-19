@@ -1,6 +1,6 @@
 #!/bin/bash -l
 
-#SBATCH --job-name=sdsc-onboarding
+#SBATCH --job-name=sdsc-ddp
 #SBATCH --time=00:05:00
 #SBATCH --nodes=4
 #SBATCH --ntasks-per-node=1
@@ -12,9 +12,11 @@
 #SBATCH --output=logs/slurm-%x.%j.out
 #SBATCH --error=logs/slurm-%x.%j.err
 
+args="${@}"
 
 module load daint-gpu
-module load sarus
+# load any further dependencies, such as
+module load PyTorch
 
 # Environment variable for OpenMP
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
@@ -24,11 +26,14 @@ export NCCL_DEBUG=INFO
 export NCCL_NET_GDR_LEVEL=PHB
 export MASTER_ADDR=$(hostname)
 
-echo "SLURM/$(basename $0): Running sbatch script on ${MASTER_ADDR} - about to launch srun command."
+echo "SLURM/$(basename "${SLURM_JOB_SCRIPT}"): Running sbatch script on ${MASTER_ADDR}"
 
-mkdir -p "$(dirname $0)"/logs
+# change to directory of this sbatch script
+cd "$(dirname "${SLURM_JOB_SCRIPT}")"
+echo "SLURM/$(basename "${SLURM_JOB_SCRIPT}"): Working in $(pwd) - about to launch srun command."
 
-srun -ul sarus run --workdir "$(pwd)" --mount type=bind,source=/scratch,destination=/scratch --mount type=bind,source=${HOME},destination=${HOME} nvcr.io/nvidia/pytorch:23.09-py3 bash -c "
+set -x
+srun -ul bash -c "
     source ./export_DDP_vars.sh
-    python -u dist_example.py
+    python -u ${args}
     "

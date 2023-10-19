@@ -92,5 +92,55 @@ sarus images
 sarus --tty --workdir "$(pwd)" --mount type=bind,source=/scratch,destination=/scratch --mount type=bind,source=${HOME},destination=${HOME} nvcr.io/nvidia/pytorch:23.09-py3 bash
 ```
 
-If needed, you can also set additional environment variables using `--env` or customize the application launched upon container startup with `--entrypoint`.
+as in `sarus_interactive.sh`. If needed, you can also set additional environment variables using `--env` or customize the application launched upon container startup with `--entrypoint`. If you only require certain commands to be run between container startup and execution of your application, take a look at `sarus_entrypoint.sh`.
 
+9. Running a distributed example script with PyTorch DDP through sbatch can be achieved with
+
+```
+sbatch submit_sarus_ddp.sh dist_ex/dist_example.py
+```
+
+10. A more complete example is available in `vit_ex`. The data can be downloaded with
+
+```
+mkdir -p data/raw/cifar10
+sbatch submit_sarus_single.sh vit_ex/fetch_cifar10.py --output data/raw/cifar10
+```
+
+Subsequently a model can be trained. As a first step, we create the output directory and copy the hyperparameters in `config.yaml` there. We set a run-label to characterize the model/HPs and particular run.
+
+```
+run_label=baseline-model-001
+mkdir -p data/vit/training/${run_label}
+cp vit_ex/config.yaml data/vit/training/${run_label}
+```
+Then we can submit a distributed training SLURM job with Sarus. Note the usage of `sbatch` parameters to override the script's `$SBATCH` entries.
+
+```
+sbatch --nodes 2 --time 10:00 submit_sarus_ddp.sh vit_ex/training.py --training-input data/raw/cifar10 --test-input data/raw/cifar10 --config data/vit/training/${run_label}/config.yaml --training-output data/vit/training/${run_label}/ --dist --dry-run
+```
+
+To run inference, we first create the output directory as well.
+```
+mkdir -p data/vit/inference/${run_label}
+```
+Then we submit a SLURM job for a single node with
+
+```
+sbatch --time 5:00 submit_sarus_single.sh vit_ex/inference.py --training-output data/vit/training/${run_label} --inference-input data/raw/cifar10 --config data/vit/training/${run_label}/config.yaml --inference-output data/vit/inference/${run_label} --dry-run
+```
+
+11. If an interative session is desired or runtime inspection with a debugger necessary, allocate a node with `salloc`, e.g.
+
+```
+salloc --job-name=sdsc-interactive --time=00:15:00 --nodes=1 --ntasks-per-node=1 --cpus-per-task=12 --constraint=gpu --partition=debug --account=csstaff
+```
+and get an interactive shell in the container with
+```
+./sarus_interactive.sh
+```
+For debugging with VScode, you can now e.g. start your application in a debugger with
+```
+python -m debugpy --listen 5678 --wait-for-client ...
+```
+and then SSH into the node and attach VScode locally to that port.
