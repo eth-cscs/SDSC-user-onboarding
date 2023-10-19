@@ -38,7 +38,7 @@ for i in range(3):
     print(f"Mean of random values: {random_value.item()/world_size}")
 
     # Add the sum of random values to the initial value
-    result = initial_value + random_value/world_size
+    result = result + random_value/world_size
     print(f"Updated initial value: {result.item()}")
 
 # Sync and output the result on master rank
