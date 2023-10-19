@@ -119,8 +119,8 @@ conda activate myenv
 Observe the change in the command prompt reflecting the new virtual environment.
 
 ```bash
-(base) pkanduri@daint104:~> conda activate myenv
-(myenv) pkanduri@daint104:~> 
+(base) <username>@daint104:~> conda activate myenv
+(myenv) <username>@daint104:~> 
 ```
 
 Now one may install any python packages using pip or a `requirements.txt` file from any project.
