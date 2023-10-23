@@ -124,13 +124,13 @@ To run inference, we first create the output directory as well.
 ```
 mkdir -p data/vit/inference/${run_label}
 ```
-Then we submit a SLURM job for a single node with
+Then we submit a SLURM job for a single process (on a single node) with
 
 ```
 sbatch --time 5:00 submit_sarus_single.sh vit_ex/inference.py --training-output data/vit/training/${run_label} --inference-input data/raw/cifar10 --config data/vit/training/${run_label}/config.yaml --inference-output data/vit/inference/${run_label} --dry-run
 ```
 
-11. If an interative session is desired or runtime inspection with a debugger necessary, allocate a node with `salloc`, e.g.
+11. If an interactive session is desired or runtime inspection with a debugger necessary, allocate a node with `salloc`, e.g.
 
 ```
 salloc --job-name=sdsc-interactive --time=00:15:00 --nodes=1 --ntasks-per-node=1 --cpus-per-task=12 --constraint=gpu --partition=debug --account=sd00
@@ -143,4 +143,4 @@ For debugging with VScode, you can now e.g. start your application in a debugger
 ```
 python -m debugpy --listen 5678 --wait-for-client ...
 ```
-and then SSH into the node and attach VScode locally to that port.
+and then SSH into the compute node with VScode and attach it locally to that port.

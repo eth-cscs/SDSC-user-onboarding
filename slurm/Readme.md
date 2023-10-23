@@ -27,7 +27,7 @@ module load cray-python
 
 and start working interactively
 
-3. Running a single node example script with Python asynchronously through sbatch can be achieved with
+3. Running a single process example script with Python asynchronously through sbatch can be achieved with
 
 ```
 sbatch submit_native_single.sh env_ex/env.py
@@ -39,4 +39,4 @@ sbatch submit_native_single.sh env_ex/env.py
 sbatch submit_native_ddp.sh dist_ex/dist_example.py
 ```
 
-A more complete example will be focused on in the `sarus` section.
+A more complete example will be focused on in the [sarus](../sarus/Readme.md) section.

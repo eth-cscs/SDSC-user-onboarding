@@ -77,9 +77,11 @@ Use this to run a batch script to launch jobs across multiple nodes. Does not re
 sbatch my_batch_script.sh
 ```
 
-Batch scripts have specific attributes and syntax which cover the configuration of the run. An example is show in the `sarus` directory. Once in the repo, try:
+Batch scripts have specific attributes and syntax which cover the configuration of the run. Examples for both single- and multi-node jobs are shown in the [slurm](slurm/Readme.md) and [sarus](sarus/Readme.md) directories. Once in the repo, try e.g.
 
 ```bash
-cd sarus/
-sbatch submit_dist_example.sh dist_ex/dist_example.py
+cd slurm/
+sbatch submit_native_ddp.sh dist_ex/dist_example.py
 ```
+
+for a multi-node example.
