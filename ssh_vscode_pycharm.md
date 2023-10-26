@@ -1,4 +1,40 @@
-# SSH and Remote IDE Setup for VS Code and PyCharm
+# MFA, SSH Config and Remote IDE Setup for VS Code & PyCharm
+
+## Multi-Factor Authentication
+
+Before setting this, ensure that the authenticator app is setup for the CSCS account. More on that [here](slides/MFA.pdf).
+
+Use the command line tool to refresh SSH keys that expire every 24 hrs. Download the tool using:
+
+```bash
+git clone git@github.com:eth-cscs/sshservice-cli.git
+```
+
+Then to get the ssh keys:
+
+```bash
+cd sshservice-cli
+bash cscs-keygen.sh
+```
+
+It will ask you to enter username, password and the OTP from the authenticator app.
+
+```bash
+➜  sshservice-cli git:(main) bash cscs-keygen.sh          
+Username : pkanduri
+Password: 
+Enter OTP (6-digit code): 
+Setting the environment : [##########------------------------------] 25%  Authenticating to the SSH key service...
+Setting the environment : [####################--------------------] 50%  Retrieving the SSH keys...
+Setting the environment : [##############################----------] 75%  Setting up the SSH keys into your home folder...
+Setting the environment : [########################################] 100%  Completed.
+```
+
+Once this happens, use the following command to add the generated key to the SSH agent for 1 day.
+
+```bash
+ssh-add -t 1d ~/.ssh/cscs-key
+```
 
 ## SSH Configuration
 
