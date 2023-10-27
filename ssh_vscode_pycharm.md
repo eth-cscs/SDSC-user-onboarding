@@ -21,7 +21,7 @@ It will ask you to enter username, password and the OTP from the authenticator a
 
 ```bash
 ➜  sshservice-cli git:(main) bash cscs-keygen.sh          
-Username : pkanduri
+Username : <username>
 Password: 
 Enter OTP (6-digit code): 
 Setting the environment : [##########------------------------------] 25%  Authenticating to the SSH key service...
