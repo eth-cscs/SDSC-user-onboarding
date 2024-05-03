@@ -6,17 +6,19 @@
 lukasd@daintYYY:~> salloc -A sd00 -C gpu --nodes=1 --time=30:00
 ```
 
-2. Get shell access on the compute node - either directly from the login node
+2. Get shell access on the compute node using
 
 ```
 lukasd@daintYYY:~> srun --pty bash
 ```
 
-or SSH directly into the compute node (via Ela and Daint login nodes)
+To open any extra shells, SSH directly into the compute node (via Ela and Daint login nodes)
 
 ```
-lukasd@ThinkPad-T470s:~$ ssh ${USER}@nid0XXXX
+lukasd@ThinkPad-T470s:~$ ssh nid0XXXX
 ```
+
+Note that in this case the environment is different from the process managed by `srun` as can be observed in the output of `env`. To load the same environment as in `srun`, you can `source` the output of `declare -x` run in the `srun` shell created above directly after ssh-ing into the compute node.
 
 3. Load the required environment for Sarus via the modules system
 
@@ -89,10 +91,10 @@ sarus images
 8. You can now start an interactive (`-tty`) shell session, mounting your code from the host and starting in the same working directory as you were on the host (`--workdir`)
 
 ```
-sarus --tty --workdir "$(pwd)" --mount type=bind,source=/scratch,destination=/scratch --mount type=bind,source=${HOME},destination=${HOME} nvcr.io/nvidia/pytorch:23.09-py3 bash
+sarus run --tty --workdir "$(pwd)" --mount type=bind,source=/scratch,destination=/scratch --mount type=bind,source=${HOME},destination=${HOME} nvcr.io/nvidia/pytorch:23.09-py3 bash
 ```
 
-or, alternatively, with `sarus_interactive.sh`. If needed, you can also set additional environment variables using `--env` or customize the application launched upon container startup with `--entrypoint`. If you only require certain commands to be run between container startup and execution of your application, take a look at `sarus_entrypoint.sh`.
+(alternatively, to compose this with `srun` from a login node use `sarus_interactive.sh`). If needed, you can also set additional environment variables using `--env` or customize the application launched upon container startup with `--entrypoint`. If you only require certain commands to be run between container startup and execution of your application, take a look at `sarus_entrypoint.sh`.
 
 9. Running a distributed example script with PyTorch DDP through asynchronously sbatch can be achieved with
 

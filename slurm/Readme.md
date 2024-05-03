@@ -6,19 +6,21 @@
 lukasd@daintYYY:~> salloc -A sd00 -C gpu --nodes=1 --time=30:00
 ```
 
-2. Get shell access on the compute node - either directly from the login node
+2. Get shell access on the compute node using
 
 ```
 lukasd@daintYYY:~> srun --pty bash
 ```
 
-(alternatively, with `native_interactive.sh`) or SSH directly into the compute node (via Ela and Daint login nodes)
+or, alternatively, with `native_interactive.sh`. To open any extra shells, SSH directly into the compute node (via Ela and Daint login nodes)
 
 ```
-lukasd@ThinkPad-T470s:~$ ssh ${USER}@nid0XXXX
+lukasd@ThinkPad-T470s:~$ ssh nid0XXXX
 ```
 
-where you can load your environment, e.g. with 
+Note that in this case the environment is different from the process managed by `srun` as can be observed in the output of `env`. To load the same environment as in `srun`, you can `source` the output of `declare -x` run in the `srun` shell created above directly after ssh-ing into the compute node.
+
+Once on the compute node, load your environment, e.g. with 
 
 ```
 module load daint-gpu
